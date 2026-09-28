@@ -1,0 +1,29 @@
+# nano /etc/nginx/sites-available/bar
+# ln -s /etc/nginx/sites-available/bar /etc/nginx/sites-enabled/bar
+
+server {
+    listen 80;
+    server_name bar;
+    root /var/www/html/bar;
+    index index.html;
+
+    # --- Configuración de Compresión Transparente ---
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;              # Clave para comprimir respuestas provenientes del backend proxy
+    gzip_comp_level 5;             # Balance óptimo entre compresión y uso de CPU
+    gzip_min_length 256;           # No comprime archivos más chicos que 256 bytes
+    gzip_types
+        text/plain
+        text/css
+        text/javascript
+        application/javascript
+        application/json
+        application/xml
+        application/rss+xml
+        image/svg+xml;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

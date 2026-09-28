@@ -1,0 +1,13 @@
+# nano /etc/nginx/sites-available/what
+# ln -s /etc/nginx/sites-available/what /etc/nginx/sites-enabled/what
+
+server {
+    listen 80 default_server;
+    server_name _;
+    root /var/www/html/what;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

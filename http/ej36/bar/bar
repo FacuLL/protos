@@ -1,0 +1,13 @@
+# nano /etc/nginx/sites-available/bar
+# ln -s /etc/nginx/sites-available/bar /etc/nginx/sites-enabled/bar
+
+server {
+    listen 80;
+    server_name bar;
+    root /var/www/html/bar;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

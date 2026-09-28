@@ -1,0 +1,13 @@
+# nano /etc/nginx/sites-available/foo
+# ln -s /etc/nginx/sites-available/foo /etc/nginx/sites-enabled/foo
+
+server {
+    listen 80;
+    server_name foo;
+    root /var/www/html/foo;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

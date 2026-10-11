@@ -1,0 +1,12 @@
+options {
+    directory "/var/cache/bind";
+
+    forwarders {
+        1.1.1.1;
+        8.8.8.8;
+    };
+    forward only; // Obliga a usar solo los forwarders sin recurrir a la raíz
+
+    dnssec-validation auto;
+    listen-on-v6 { any; };
+};

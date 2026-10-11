@@ -1,0 +1,24 @@
+$TTL    86400        ; TTL por defecto: 1 día
+@       IN      SOA     ns1.foo.pdc.lab. admin.foo.pdc.lab. (
+                        2026092801      ; Serial (formato YYYYMMDDNN)
+                        3600            ; Refresh (1 hora)
+                        1800            ; Retry (30 mins)
+                        604800          ; Expire (1 semana)
+                        86400 )         ; Negative Cache TTL (1 día)
+
+; Servidores de nombres
+@       IN      NS      ns1.foo.pdc.lab.
+
+; Registros de hosts principales (con TTL por defecto)
+ns1     IN      A       192.168.1.10
+host1   IN      A       192.168.1.11
+
+; Hosts con TTL explícito personalizado (ej. TTL bajo para servicios dinámicos)
+host2   300     IN      A       192.168.1.12    ; TTL de 5 minutos
+host3   7200    IN      A       192.168.1.13    ; TTL de 2 horas
+
+; Alias (CNAME) para cada host
+dns     IN      CNAME   ns1.foo.pdc.lab.
+web     600     IN      CNAME   host1.foo.pdc.lab.  ; TTL de 10 minutos
+ftp     IN      CNAME   host2.foo.pdc.lab.
+mail    IN      CNAME   host3.foo.pdc.lab.

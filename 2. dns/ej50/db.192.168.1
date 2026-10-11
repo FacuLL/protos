@@ -1,0 +1,16 @@
+$TTL    86400
+@       IN      SOA     ns1.foo.pdc.lab. admin.foo.pdc.lab. (
+                        2026092801      ; Serial
+                        3600            ; Refresh
+                        1800            ; Retry
+                        604800          ; Expire
+                        86400 )         ; Negative Cache TTL
+
+; Servidor de nombres
+@       IN      NS      ns1.foo.pdc.lab.
+
+; Punteros inversos (PTR)
+10      IN      PTR     ns1.foo.pdc.lab.
+11      IN      PTR     host1.foo.pdc.lab.
+12      300     IN      PTR     host2.foo.pdc.lab.    ; TTL personalizado
+13      7200    IN      PTR     host3.foo.pdc.lab.

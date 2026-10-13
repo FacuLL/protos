@@ -1,24 +1,31 @@
-$TTL    86400        ; TTL por defecto: 1 día
-@       IN      SOA     ns1.foo.pdc.lab. admin.foo.pdc.lab. (
+$TTL    1d        ; TTL por defecto: 1 día
+$ORIGIN foo.pdc.lab.
+
+@       IN      SOA     ns1     correo\.admin ( ; Se declara ns1.foo.pdc.lab como la NZ responsable y correo.admin@foo.pdc.lab como el correo del responsable
                         2026092801      ; Serial (formato YYYYMMDDNN)
-                        3600            ; Refresh (1 hora)
-                        1800            ; Retry (30 mins)
-                        604800          ; Expire (1 semana)
-                        86400 )         ; Negative Cache TTL (1 día)
+                        1h              ; Refresh
+                        30m             ; Retry
+                        7d              ; Expire
+                        1d )            ; Negative Cache TTL
 
 ; Servidores de nombres
 @       IN      NS      ns1.foo.pdc.lab.
+
+; Servidores de correo (para recibir mails)
+@       IN      MX      1   mail
 
 ; Registros de hosts principales (con TTL por defecto)
 ns1     IN      A       192.168.1.10
 host1   IN      A       192.168.1.11
 
 ; Hosts con TTL explícito personalizado (ej. TTL bajo para servicios dinámicos)
-host2   300     IN      A       192.168.1.12    ; TTL de 5 minutos
-host3   7200    IN      A       192.168.1.13    ; TTL de 2 horas
+host2   5m     IN      A       192.168.1.12    ; TTL de 5 minutos
+host3   2h    IN      A       192.168.1.13    ; TTL de 2 horas
 
 ; Alias (CNAME) para cada host
 dns     IN      CNAME   ns1.foo.pdc.lab.
-web     600     IN      CNAME   host1.foo.pdc.lab.  ; TTL de 10 minutos
+web     10m     IN      CNAME   host1.foo.pdc.lab.  ; TTL de 10 minutos
 ftp     IN      CNAME   host2.foo.pdc.lab.
 mail    IN      CNAME   host3.foo.pdc.lab.
+
+@       IN      TXT     "v=spf1 include:_spf.google.com ipv4:192.168.1.13 ipv4:240.0.0.5" ; Configuro spf para que se permita el envio de mails desde el server smtp y desde otro

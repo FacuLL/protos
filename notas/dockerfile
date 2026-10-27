@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    gcc \
+    gdb \
+    make \
+    iputils-ping \
+    net-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# Definimos que la carpeta de trabajo sea /rodri
+WORKDIR /rodri

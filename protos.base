@@ -1,0 +1,20 @@
+filters:
+  and:
+    - file.inFolder("protos")
+    - 'file.ext == "md"'
+
+views:
+  - type: table
+    name: "Apuntes"
+    filters: 'tipo == "apuntes"'
+    order:
+      - file.name
+
+  - type: table
+    name: "Todos"
+    order:
+      - file.name
+      - tipo
+    groupBy:
+      property: tipo
+      direction: ASC
